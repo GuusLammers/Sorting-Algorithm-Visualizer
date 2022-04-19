@@ -18,7 +18,7 @@ class SortingController:
 
     def update_sorting_view(self) -> None:
         """Updates the sorting view to reflect changes in the sorting_model"""
-        self.sorting_view.sorting_canvas.draw_sorting_bars(self.sorting_model.get_sorting_list())    
+        self.sorting_view.reload_sorting_canvas(self.sorting_model.get_sorting_list())  
 
     def start_event_listener(self) -> None:
         """Listens for events posted to the event_queue"""    
@@ -30,6 +30,8 @@ class SortingController:
                     """Resets sorting list"""
                     self.sorting_model.shuffle_sorting_list()
                     self.update_sorting_view()
+                elif isinstance(event, e.StartEvent):
+                    print(event.payload)    
             # if queue is empty
             else:        
                 time.sleep(0.1)
