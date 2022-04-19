@@ -8,16 +8,18 @@ import event as e
 class SortingView(tk.Tk):
 
     def __init__(self, event_queue: queue.Queue) -> None:
+        self.event_queue = event_queue
+        
         tk.Tk.__init__(self)
         self.main_frame = tk.Frame(self)
         self.resizable(width=False, height=False)
-
-        self.event_queue = event_queue
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
 
         self.navigation_bar_frame = NavigationBarFrame(self, self.event_queue)
         self.sorting_canvas = SortingCanvas(self)
 
-        self.navigation_bar_frame.grid(row=0, column=0)
+        self.navigation_bar_frame.grid(row=0, column=0, sticky=tk.NSEW)
         self.sorting_canvas.grid(row=1, column=0)
 
     def reload_sorting_canvas(self,  sorting_list: se.SortingElement):
@@ -38,14 +40,15 @@ class NavigationBarFrame(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.configure(height=50, width=1000)
         self.configure(background="black", highlightbackground="grey", highlightthickness=2)
+        self.grid_columnconfigure(0, weight=1, uniform="third")
+        self.grid_columnconfigure(1, weight=1, uniform="third")
+        self.grid_columnconfigure(2, weight=1, uniform="third")
 
-
+        # create reset button
         self.reset_button = tk.Button(self, text="Reset", command=self.send_reset_event)
-        self.reset_button.grid(row=0, column=0)
+        self.reset_button.grid(row=0, column=0, sticky=tk.NSEW)
 
-        self.start_button = tk.Button(self, text="Start", command=self.send_start_event)
-        self.start_button.grid(row=0, column=1)
-
+        # create srop down menu
         self.drop_down_menu_value = tk.StringVar(self)
         self.choices = [
             "insertion sort",
@@ -53,7 +56,12 @@ class NavigationBarFrame(tk.Frame):
         ]
         self.drop_down_menu_value.set(self.choices[0])
         self.drop_down_menu = tk.OptionMenu(self, self.drop_down_menu_value, *self.choices)
-        self.drop_down_menu.grid(row=0, column=2)
+        self.drop_down_menu.grid(row=0, column=1, sticky=tk.NSEW)
+
+        # create start button
+        self.start_button = tk.Button(self, text="Start", command=self.send_start_event)
+        self.start_button.grid(row=0, column=2, sticky=tk.NSEW)
+
 
     def send_reset_event(self) -> None:
         """Adds a reset event to the event queue"""
