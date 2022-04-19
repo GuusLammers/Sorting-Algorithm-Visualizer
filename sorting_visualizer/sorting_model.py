@@ -1,4 +1,5 @@
 import random
+import queue 
 
 import sorting_element as se
 import color as c
@@ -6,9 +7,10 @@ import color as c
 
 class SortingModel:
 
-    def __init__(self, list_size: int) -> None:
+    def __init__(self, list_size: int, event_queue: queue.Queue) -> None:
         self.list_size = list_size
         self.sorting_list: list[se.SortingElement] = list()
+        self.event_queue = event_queue
 
         self.shuffle_sorting_list()
 

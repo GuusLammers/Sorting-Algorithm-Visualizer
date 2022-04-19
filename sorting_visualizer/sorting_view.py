@@ -1,16 +1,20 @@
 import tkinter as tk
+import queue
 
 import sorting_element as se
+import event as e
 
 
 class SortingView(tk.Tk):
 
-    def __init__(self) -> None:
+    def __init__(self, event_queue: queue.Queue) -> None:
         tk.Tk.__init__(self)
         self.main_frame = tk.Frame(self)
         self.resizable(width=False, height=False)
 
-        self.navigation_bar_frame = NavigationBarFrame(self)
+        self.event_queue = event_queue
+
+        self.navigation_bar_frame = NavigationBarFrame(self, self.event_queue)
         self.sorting_canvas = SortingCanvas(self)
 
         self.navigation_bar_frame.grid(row=0, column=0)
@@ -20,13 +24,19 @@ class SortingView(tk.Tk):
 
 class NavigationBarFrame(tk.Frame):
 
-    def __init__(self, parent) -> None:
+    def __init__(self, parent, event_queue: queue.Queue) -> None:
         tk.Frame.__init__(self, parent)
-
         self.configure(height=50, width=1000)
-
         self.configure(background="black", highlightbackground="grey", highlightthickness=2)
+        self.event_queue = event_queue
 
+        self.reset_button = tk.Button(self, text="Reset", command=self.send_reset_event)
+        self.reset_button.pack()
+
+    def send_reset_event(self) -> None:
+        """Adds a reset event to the event queue"""
+        reset_event = e.ResetEvent()
+        self.event_queue.put_nowait(reset_event)
 
 
 class SortingCanvas(tk.Canvas):
@@ -47,7 +57,6 @@ class SortingCanvas(tk.Canvas):
         # redraw sorting bars
         bar_width = 10
         gap = 1
-        print("Bar Width: ", bar_width)
         for i, sorting_element in enumerate(sorting_list):
             height = int((sorting_element.get_value() / len(sorting_list)) * self.height)
             x0 = i * bar_width + gap
