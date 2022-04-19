@@ -37,6 +37,7 @@ class NavigationBarFrame(tk.Frame):
     def __init__(self, parent, event_queue: queue.Queue) -> None:
         self.event_queue = event_queue
         
+        # initialize and configure frame
         tk.Frame.__init__(self, parent)
         self.configure(height=50, width=1000)
         self.configure(background="black", highlightbackground="grey", highlightthickness=2)
@@ -48,7 +49,7 @@ class NavigationBarFrame(tk.Frame):
         self.reset_button = tk.Button(self, text="Reset", command=self.send_reset_event)
         self.reset_button.grid(row=0, column=0, sticky=tk.NSEW)
 
-        # create srop down menu
+        # create drop down menu
         self.drop_down_menu_value = tk.StringVar(self)
         self.choices = [
             "insertion sort",
@@ -61,7 +62,6 @@ class NavigationBarFrame(tk.Frame):
         # create start button
         self.start_button = tk.Button(self, text="Start", command=self.send_start_event)
         self.start_button.grid(row=0, column=2, sticky=tk.NSEW)
-
 
     def send_reset_event(self) -> None:
         """Adds a reset event to the event queue"""
