@@ -1,5 +1,4 @@
 class Event:
-
     pass
 
 
@@ -11,4 +10,9 @@ class ResetEvent(Event):
 class StartEvent(Event):
 
     def __init__(self, payload=None) -> None:
-        self.payload = payload        
+        self.payload = payload  
+
+class UpdateEvent(Event):
+
+    def __init__(self) -> None:
+        super().__init__()              

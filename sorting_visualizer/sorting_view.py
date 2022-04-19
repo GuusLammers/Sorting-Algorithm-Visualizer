@@ -97,6 +97,6 @@ class SortingCanvas(tk.Canvas):
             y0 = 0
             x1 = x0 + bar_width - gap
             y1 = height
-            self.create_rectangle(x0, y0, x1, y1, width=0, fill="white")
+            self.create_rectangle(x0, y0, x1, y1, width=0, fill=sorting_element.get_color())
 
 

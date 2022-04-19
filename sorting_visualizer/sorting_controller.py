@@ -31,7 +31,11 @@ class SortingController:
                     self.sorting_model.shuffle_sorting_list()
                     self.update_sorting_view()
                 elif isinstance(event, e.StartEvent):
-                    print(event.payload)    
+                    """Starts running sorting algorithm"""
+                    print(event.payload) 
+                    threading.Thread(target=self.sorting_model.selection_sort, daemon=True).start() 
+                elif isinstance(event, e.UpdateEvent):
+                    self.update_sorting_view()    
             # if queue is empty
             else:        
                 time.sleep(0.1)

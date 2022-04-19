@@ -10,8 +10,9 @@ class SortingElement:
     def get_value(self) -> int:
         return self._value
 
-    def get_color(self) -> c.Color:  
-        return self.color
+    def get_color(self) -> str:  
+        """Returns value of Enum"""
+        return self.color.value
 
     def set_color(self, color: c.Color) -> None:      
         self.color = color
