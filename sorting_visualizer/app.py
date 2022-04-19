@@ -14,6 +14,6 @@ if __name__ == "__main__":
     sorting_view = sv.SortingView(event_queue)
     sorting_controller = sc.SortingController(sorting_model, sorting_view, event_queue)
 
-    threading.Thread(target = sorting_controller.start_event_listener, daemon=True).start()
+    threading.Thread(target=sorting_controller.start_event_listener, daemon=True).start()
 
     sorting_view.mainloop()
