@@ -11,7 +11,6 @@ class SortingView(tk.Tk):
         self.event_queue = event_queue
         
         tk.Tk.__init__(self)
-        self.main_frame = tk.Frame(self)
         self.resizable(width=False, height=False)
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
