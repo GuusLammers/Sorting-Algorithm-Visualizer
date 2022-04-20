@@ -70,11 +70,11 @@ def quick_sort_partition(sorting_list: "list[se.SortingElement]", low: int, high
         
             # Swapping element at i with element at j
             sorting_list[i], sorting_list[j] = sorting_list[j], sorting_list[i]
-            #update(sorting_list, event_queue)
+            update(sorting_list, event_queue)
         
-        # Swap the pivot element with the greater element specified by i
-        sorting_list[i + 1], sorting_list[high] = sorting_list[high], sorting_list[i + 1]
-        update(sorting_list, event_queue)
-        
-        # Return the position from where partition is done
-        return i + 1
+    # Swap the pivot element with the greater element specified by i
+    sorting_list[i + 1], sorting_list[high] = sorting_list[high], sorting_list[i + 1]
+    update(sorting_list, event_queue)
+    
+    # Return the position from where partition is done
+    return i + 1
