@@ -40,10 +40,8 @@ def quick_sort(sorting_list: "list[se.SortingElement]", low: int, high: int, eve
         # Find pivot element such that
         # element smaller than pivot are on the left
         # element greater than pivot are on the right
-        print(low, high)
         pi = quick_sort_partition(sorting_list, low, high, event_queue)
-        print(pi)
-        sorting_list[pi].set_color(c.Color.RED)
+        sorting_list[pi].set_color(c.Color.GREEN)
     
         # Recursive call on the left of pivot
         quick_sort(sorting_list, low, pi - 1, event_queue)
