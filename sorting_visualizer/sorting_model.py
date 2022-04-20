@@ -73,4 +73,9 @@ class SortingModel:
             sa.insertion_sort(
                 sorting_list=self.sorting_list,
                 event_queue=self.event_queue
-            )        
+            ) 
+        elif sorting_algorithm == "cocktail sort":
+            sa.cocktail_sort(
+                sorting_list=self.sorting_list,
+                event_queue=self.event_queue
+            )            

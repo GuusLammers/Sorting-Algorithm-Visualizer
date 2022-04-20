@@ -148,6 +148,7 @@ def merge_sort_merge(sorting_list: "list[se.SortingElement]", start: int, mid: i
 
 
 def insertion_sort(sorting_list: "list[se.SortingElement]", event_queue: queue.Queue) -> None:
+    """Insertion sort altered to update colors of sorting elements at specific times"""
     # Traverse through 1 to len(arr)
     for i in range(1, len(sorting_list)):
  
@@ -170,4 +171,63 @@ def insertion_sort(sorting_list: "list[se.SortingElement]", event_queue: queue.Q
         sorting_list[j + 1].set_color(c.Color.WHITE)
 
     # sort completed
-    sort_complete(sorting_list, event_queue)    
+    sort_complete(sorting_list, event_queue) 
+
+
+
+def cocktail_sort(sorting_list: "list[se.SortingElement]", event_queue: queue.Queue) -> None:
+    """Cocktail sort altered to update colors of sorting elements at specific times"""
+    n = len(sorting_list)
+    swapped = True
+    start = 0
+    end = n-1
+    while (swapped==True):
+  
+        # reset the swapped flag on entering the loop,
+        # because it might be true from a previous
+        # iteration.
+        swapped = False
+  
+        # loop from left to right same as the bubble
+        # sort
+        for i in range (start, end):
+            sorting_list[i].set_color(c.Color.BLUE)
+            update(sorting_list, event_queue)
+            sorting_list[i].set_color(c.Color.WHITE)
+            if (sorting_list[i].get_value() > sorting_list[i+1].get_value()) :
+                sorting_list[i], sorting_list[i+1]= sorting_list[i+1], sorting_list[i]
+                swapped=True
+  
+        sorting_list[end].set_color(c.Color.GREEN)
+
+        # if nothing moved, then array is sorted.
+        if (swapped==False):
+            break
+  
+        # otherwise, reset the swapped flag so that it
+        # can be used in the next stage
+        swapped = False
+  
+        # move the end point back by one, because
+        # item at the end is in its rightful spot
+        end = end-1
+  
+        # from right to left, doing the same
+        # comparison as in the previous stage
+        for i in range(end-1, start-1,-1):
+            sorting_list[i+1].set_color(c.Color.BLUE)
+            update(sorting_list, event_queue)
+            sorting_list[i+1].set_color(c.Color.WHITE)
+            if (sorting_list[i].get_value() > sorting_list[i+1].get_value()):
+                sorting_list[i], sorting_list[i+1] = sorting_list[i+1], sorting_list[i]
+                swapped = True
+  
+        sorting_list[start].set_color(c.Color.GREEN)
+
+        # increase the starting point, because
+        # the last stage would have moved the next
+        # smallest number to its rightful spot.
+        start = start+1       
+
+    # sort complete  
+    sort_complete(sorting_list, event_queue)  

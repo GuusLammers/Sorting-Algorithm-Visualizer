@@ -54,7 +54,8 @@ class NavigationBarFrame(tk.Frame):
             "selection sort",
             "quick sort",
             "merge sort",
-            "insertion sort"
+            "insertion sort",
+            "cocktail sort"
         ]
         self.drop_down_menu_value.set(self.choices[0])
         self.drop_down_menu = tk.OptionMenu(self, self.drop_down_menu_value, *self.choices)
