@@ -9,10 +9,10 @@ class ResetEvent(Event):
 
 class StartEvent(Event):
 
-    def __init__(self, payload=None) -> None:
+    def __init__(self, payload) -> None:
         self.payload = payload  
 
 class UpdateEvent(Event):
 
-    def __init__(self) -> None:
-        super().__init__()              
+    def __init__(self, payload) -> None:
+        self.payload = payload              

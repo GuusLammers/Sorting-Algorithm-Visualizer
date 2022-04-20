@@ -23,19 +23,22 @@ class SortingController:
     def start_event_listener(self) -> None:
         """Listens for events posted to the event_queue"""    
         while True:
-            # if queue is not empty
+            # if queue is not empty handle next event
             if not self.event_queue.empty():
                 event = self.event_queue.get_nowait()
+                
                 if isinstance(event, e.ResetEvent):
                     """Resets sorting list"""
                     self.sorting_model.shuffle_sorting_list()
                     self.update_sorting_view()
+                
                 elif isinstance(event, e.StartEvent):
-                    """Starts running sorting algorithm"""
-                    print(event.payload) 
-                    threading.Thread(target=self.sorting_model.selection_sort, daemon=True).start() 
+                    """Starts running sorting algorithm on new thread"""
+                    threading.Thread(target=self.sorting_model.sort, args=(event.payload, ), daemon=True).start()
+                
                 elif isinstance(event, e.UpdateEvent):
-                    self.update_sorting_view()    
+                    self.sorting_view.reload_sorting_canvas(event.payload)
+
             # if queue is empty
             else:        
                 time.sleep(0.1)
