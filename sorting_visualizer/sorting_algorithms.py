@@ -91,7 +91,8 @@ def quick_sort_partition(sorting_list: "list[se.SortingElement]", low: int, high
 
 
 
-def merge_sort(sorting_list: "list[se.SortingElement]", left: int, right: int, event_queue: queue.Queue, level: int):
+def merge_sort(sorting_list: "list[se.SortingElement]", left: int, right: int, event_queue: queue.Queue, level: int) -> None:
+    """Merge sort altered to update colors of sorting elements at specific times"""
     if (left < right):
  
         # Same as (l + r) / 2, but avoids overflow
@@ -109,7 +110,8 @@ def merge_sort(sorting_list: "list[se.SortingElement]", left: int, right: int, e
             sort_complete(sorting_list, event_queue)
 
 
-def merge_sort_merge(sorting_list: "list[se.SortingElement]", start: int, mid: int, end: int, event_queue: queue.Queue):
+def merge_sort_merge(sorting_list: "list[se.SortingElement]", start: int, mid: int, end: int, event_queue: queue.Queue) -> None:
+    """Merge function used by merge sort"""
     start2 = mid + 1
  
     # If the direct merge is already sorted
@@ -142,3 +144,30 @@ def merge_sort_merge(sorting_list: "list[se.SortingElement]", start: int, mid: i
             start += 1
             mid += 1
             start2 += 1
+
+
+
+def insertion_sort(sorting_list: "list[se.SortingElement]", event_queue: queue.Queue) -> None:
+    # Traverse through 1 to len(arr)
+    for i in range(1, len(sorting_list)):
+ 
+        key = sorting_list[i]
+ 
+        # Move elements of arr[0..i-1], that are
+        # greater than key, to one position ahead
+        # of their current position
+        j = i-1
+        while j >= 0 and key.get_value() < sorting_list[j].get_value():
+                sorting_list[j + 1] = sorting_list[j]
+                sorting_list[j + 1].set_color(c.Color.RED)
+                update(sorting_list, event_queue)
+                sorting_list[j + 1].set_color(c.Color.WHITE)
+                j -= 1
+
+        sorting_list[j + 1] = key
+        sorting_list[j + 1].set_color(c.Color.BLUE)
+        update(sorting_list, event_queue)
+        sorting_list[j + 1].set_color(c.Color.WHITE)
+
+    # sort completed
+    sort_complete(sorting_list, event_queue)    
