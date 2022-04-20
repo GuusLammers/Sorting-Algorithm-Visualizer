@@ -54,8 +54,20 @@ class SortingModel:
         if sorting_algorithm == "insertion sort":
             sa.selection_sort(self.sorting_list, self.event_queue)
         elif sorting_algorithm == "quick sort":
-            print("Length: ", len(self.sorting_list))
-            sa.quick_sort(self.sorting_list.copy(), 0, len(self.sorting_list) - 1, self.event_queue)     
+            sa.quick_sort(
+                sorting_list=self.sorting_list.copy(), 
+                low=0, 
+                high=len(self.sorting_list) - 1, 
+                event_queue=self.event_queue, 
+                level=0)     
+        elif sorting_algorithm == "merge sort":
+            print("merge sort")
+            sa.merge_sort(
+                sorting_list=self.sorting_list, 
+                left=0, 
+                right=len(self.sorting_list) - 1, 
+                event_queue=self.event_queue,
+                level=0)    
 
 
 
