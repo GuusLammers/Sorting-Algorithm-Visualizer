@@ -10,23 +10,21 @@ class SortingView(tk.Tk):
     def __init__(self, event_queue: queue.Queue) -> None:
         self.event_queue = event_queue
         
+        # initialize and configure tkinter root
         tk.Tk.__init__(self)
         self.resizable(width=False, height=False)
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_columnconfigure(0, weight=1)
 
+        # instantiate navigation bar and sorting canvas
         self.navigation_bar_frame = NavigationBarFrame(self, self.event_queue)
         self.sorting_canvas = SortingCanvas(self)
-
         self.navigation_bar_frame.grid(row=0, column=0, sticky=tk.NSEW)
         self.sorting_canvas.grid(row=1, column=0)
 
     def reload_sorting_canvas(self,  sorting_list: se.SortingElement):
-        """Reloads canvas by destroying current canvas and replacing it with a new one"""
+        """Reloads sorting canvas by destroying current sorting canvas and replacing it with a new one"""
         new_sorting_canvas = SortingCanvas(self)
         new_sorting_canvas.draw_sorting_bars(sorting_list)
         new_sorting_canvas.grid(row=1, column=0)
-        
         self.sorting_canvas.destroy()
         self.sorting_canvas = new_sorting_canvas
 
@@ -36,7 +34,7 @@ class NavigationBarFrame(tk.Frame):
     def __init__(self, parent, event_queue: queue.Queue) -> None:
         self.event_queue = event_queue
         
-        # initialize and configure frame
+        # initialize and configure tkinter frame
         tk.Frame.__init__(self, parent)
         self.configure(height=50, width=1000)
         self.configure(background="black", highlightbackground="grey", highlightthickness=2)
@@ -79,6 +77,7 @@ class NavigationBarFrame(tk.Frame):
 class SortingCanvas(tk.Canvas):
 
     def __init__(self, parent) -> None:
+        # initialize and configure tkinter canvas
         tk.Canvas.__init__(self, parent)
         self.width = 1000
         self.height = 750
@@ -87,11 +86,7 @@ class SortingCanvas(tk.Canvas):
 
 
     def draw_sorting_bars(self, sorting_list: se.SortingElement):
-        """Clears the canvas and then redraws the sorting bars onto the canvas"""
-        # clear canvas
-        self.delete("all")
-
-        # redraw sorting bars
+        """Draws the sorting bars onto the canvas"""
         bar_width = 10
         gap = 1
         for i, sorting_element in enumerate(sorting_list):

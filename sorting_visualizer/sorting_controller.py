@@ -13,7 +13,6 @@ class SortingController:
         self.sorting_model = sorting_model
         self.sorting_view = sorting_view
         self.event_queue = event_queue
-
         self.update_sorting_view()
 
     def update_sorting_view(self) -> None:
@@ -39,6 +38,6 @@ class SortingController:
                 elif isinstance(event, e.UpdateEvent):
                     self.sorting_view.reload_sorting_canvas(event.payload)
 
-            # if queue is empty
+            # if queue is empty sleep for a short period
             else:        
-                time.sleep(0.1)
+                time.sleep(0.01)

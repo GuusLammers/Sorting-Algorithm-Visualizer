@@ -14,7 +14,6 @@ class SortingModel:
         self.list_size = list_size
         self.sorting_list: list[se.SortingElement] = list()
         self.event_queue = event_queue
-
         self.shuffle_sorting_list()
 
     def shuffle_sorting_list(self) -> None:
@@ -25,29 +24,14 @@ class SortingModel:
             self.sorting_list.append(se.SortingElement(rand, c.Color.WHITE))
 
     def get_sorting_list(self) -> "list[se.SortingElement]":
+        """Returns the current sorting list"""
         return self.sorting_list       
 
     def send_update_event(self, sorting_list: "list[se.SortingElement]") -> None:
-        """Creates an update event and adds it to the event queue"""
+        """Creates an update event and adds it to the event queue then sleeps for a specified amount of time"""
         update_event = e.UpdateEvent(sorting_list)
         self.event_queue.put_nowait(update_event)
-        time.sleep(0.05)
-
-    def set_index_white(self, index: int) -> None:
-        """Sets element at index in sorting_list to the color white""" 
-        self.sorting_list[index].set_color(c.Color.WHITE)
-
-    def set_index_red(self, index: int) -> None:
-        """Sets element at index in sorting_list to the color red""" 
-        self.sorting_list[index].set_color(c.Color.RED) 
-
-    def set_index_green(self, index: int) -> None:
-        """Sets element at index in sorting_list to the color green""" 
-        self.sorting_list[index].set_color(c.Color.GREEN) 
-
-    def set_index_blue(self, index: int) -> None:
-        """Sets element at index in sorting_list to the color blue""" 
-        self.sorting_list[index].set_color(c.Color.BLUE)           
+        time.sleep(0.05)          
 
     def sort(self, sorting_algorithm: str) -> None:
         """Runs passed in sorting algorithm"""
